@@ -58,9 +58,10 @@ int main()
 		// render
 		BeginDrawing();
 
-		board->Render();
-
 		ClearBackground(RAYWHITE);
+		board->Render();
+		DrawText("ASD", 22, 2, 16, BLACK);
+		DrawText("OP", 198, 2, 16, BLACK);
 
 		EndDrawing();
 	}

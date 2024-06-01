@@ -25,9 +25,6 @@ Board::Board (int ax, int ay) {
 
 void Board::Step() {
 
-	std::cout << "Step\n";
-	// std::cout << piece->y;
-
 	// move piece down
 	p.Down();
 
@@ -47,6 +44,39 @@ void Board::Step() {
 
 		p = Piece(4, 20, type);
 		piece = &p;
+	}
+
+	Break();
+}
+
+void Board::Break()
+{
+	for (int y = 1; y < rows; y++) {
+		bool full = true;
+		{
+			for (int x = 0; x < columns; x++) {
+				int i = x + (y * columns);
+				int v = cells[i];
+				if (v == 0)
+					full = false;
+			}
+		}
+
+		if (full) {
+			for (int x = 1; x < columns - 1; x++) {
+				int i = x + (y * columns);
+				cells[i] = 0;
+			}
+
+			for (int ay = y; ay < rows - 1; ay++) {
+				for (int x = 1; x < columns - 1; x++) {
+					int i = x + (ay * columns);
+					int fi = x + ((ay + 1) * columns);
+					cells[i] = cells[fi];
+				}
+			}
+			y--;
+		}
 	}
 }
 
@@ -148,8 +178,6 @@ void Board::Render()
 
 			if (v == 1)
 				BlockRenderer::RenderBlock(this->x + (px * PIECE_SIZE), -this->y + (-py * PIECE_SIZE), BLACK);
-			else 
-				BlockRenderer::RenderBlock(this->x + (px * PIECE_SIZE), -this->y + (-py * PIECE_SIZE), RED);
 		}
 	}
 }

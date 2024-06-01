@@ -19,6 +19,7 @@ class Board {
 		Board(int ax, int ay);
 		void Step();
 		bool Collide();
+		void Break();
 		void Place();
 		void Left();
 		void Right();
